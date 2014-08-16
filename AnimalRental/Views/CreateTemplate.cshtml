@@ -1,0 +1,31 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = null;
+}
+
+@Umbraco.RenderMacro("AngularRefrasher")
+
+<div class="row">
+    <div class="col-sm-offset-1 col-sm-7 col-xs-12">
+        <h1>Publish new animal offer</h1>
+        <form role="form" name="articleForm">
+            <div class="form-group" data-ng-class="{ 'has-error': articleForm.name.$invalid && articleForm.name.$dirty, 'has-success': articleForm.name.$valid }">
+                <label for="title">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Title" data-ng-model="model.Name" required>
+            </div>
+            <div class="form-group" data-ng-class="{ 'has-error': articleForm.description.$invalid && articleForm.description.$dirty, 'has-success': articleForm.description.$valid }">
+                <label for="content">Description</label>
+                <textarea class="form-control" id="description" name="description" placeholder="...write some description here..." cols="80" rows="10" data-ng-model="model.Description" required></textarea>
+            </div>
+            <div class="form-group" data-ng-class="{ 'has-error': articleForm.species.$invalid && articleForm.species.$dirty, 'has-success': articleForm.species.$valid }">
+                <label for="species">Species</label>
+                <select class="form-control" id="species" name="species" ng-model="model.AnimalSpeciesId" ng-options="specy.AnimalSpeciesId as specy.Species for specy in species" required></select>
+            </div>
+            <div class="form-group" data-ng-class="{ 'has-error': articleForm.photourl.$invalid && articleForm.photourl.$dirty, 'has-success': articleForm.photourl.$valid }">
+                <input class="file" accept="image/*" id="photourl" name="photourl" type="file" style="visibility:hidden;" ng-file-select="onFileSelect($files)" novalidate>
+                <button class="btn" onclick="$('#photourl').click();">Change Photo</button>
+            </div>
+            <button type="submit" class="btn btn-success" data-ng-click="submit()">Submit</button>
+        </form>
+    </div>
+</div>

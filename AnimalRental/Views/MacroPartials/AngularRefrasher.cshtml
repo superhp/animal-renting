@@ -1,0 +1,14 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+<!-- This is work-around for AngularJS refresh because of Umbraco form post 
+	 Those scripts are not executed if AngularJS is active.
+	 They are active after refresh or fresh nrowser request.
+     Defined in FinalTemplate. Does not work in Home, Edit and Details!
+-->
+
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script>
+    if ($('#angularCheck').val() !== '1') {
+        window.location.replace("/");
+    }
+</script>

@@ -1,0 +1,77 @@
+﻿<!-- Details -->
+	
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = null;
+}
+	
+<div class="row">
+    <div class="col-sm-offset-1 col-sm-5 col-xs-12">
+        <h1>{{animal.Name}}</h1>
+        <br />
+        <p>Species: {{animal.Species.Species}}</p>
+        <p>Renter: {{userName}}</p>
+        <br />
+        <p>{{animal.Description}}</p>
+        <input hidden='hidden' id='AnimalId' value='{{animal.AnimalId}}' />
+        <input hidden='hidden' id='AnimalStatus' value='{{animal.Status}}' />
+    </div>
+    <div class="col-sm-1 col-xs-12"></div>
+    <div class="col-sm-4 col-xs-12">
+        <img src="~/AnimalPhotos/{{animal.PhotoUrl}}" class="col-sm-12" style="margin-bottom: 19px;" />
+        <button ng-show="animal.Status=='0'" id="button-rent" type="button" ng-click="rentng('rentanimal');" class="btn btn-success btn-lg btn-block">Rent it!</button>
+        <button ng-show="animal.Status=='1'" id="button-return" type="button" ng-click="rentng('returnanimal');" class="btn btn-primary btn-lg btn-block">Return</button>
+        <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+    </div>
+</div>
+
+<div class="row">
+    <br /><br /><br />
+</div>
+
+<!-- Comments -->
+<div class="row">
+    <div class="col-xs-12" style="text-align: center"><h4>Comments</h4></div>
+</div>
+<div class="row">
+    <div class="col-sm-offset-1 col-xs-10">
+        <div>
+            <div class="row" ng-repeat="message in animal.Comments">
+                <div class="col-xs-12"><h4>{{message.Author}}</h4></div>
+                <div class="col-xs-12"><small><i>{{ message.PublishDate | date : 'HH:mm, yy-MMM-dd'}}</i></small></div>
+                <div class="col-xs-12"><p>{{message.Message}}</p></div>
+                <div class="col-xs-12"><hr /></div>
+            </div>
+        </div>
+        <div>
+            <div class="row">
+                <div class="col-sm-offset-1 col-xs-10">
+                    <h2>New comment</h2>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Your nickname" ng-model="model.Author">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" placeholder="Message" ng-model="model.Message" cols="160" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" ng-click="sendMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal - confirmation -->
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Rental Confirmation</h3>
+    </div>
+    <div class="modal-body">
+        {{modalMessage}}
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-click="ok()">Yes</button>
+        <button class="btn btn-primary" ng-click="cancel()">No</button>
+    </div>
+</script>

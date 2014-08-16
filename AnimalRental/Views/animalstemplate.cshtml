@@ -1,0 +1,34 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = null;
+}
+
+@Umbraco.RenderMacro("AngularRefrasher")
+
+<div class="row">
+    <div class="col-sm-offset-1 col-sm-10 col-xs-12">
+        <h1>Animal list</h1>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th class="col-sm-1">Name</th>
+                    <th class="col-sm-1">Species</th>
+                    <th class="col-sm-1">Renter</th>
+                    <th class="col-sm-1">Status</th>
+                    <th class="col-sm-1"></th>
+                    <th class="col-sm-1"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="animal in animals">
+                    <td>{{animal.Name}}</td>
+                    <td>{{animal.Species.Species}}</td>
+                    <td>{{animal.UserId.name.userName}}</td>
+                    <td>{{animal.Status}}</td>
+                    <td><a href='/details/{{animal.AnimalId}}'>See Details</a></td>
+                    <td><a ng-if="animal.UserId.id == currentUser.userId" href='/edit/{{animal.AnimalId}}'>Edit</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

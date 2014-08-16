@@ -1,0 +1,64 @@
+﻿<!-- Meniu formatavimas!!! -->
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@*
+    Macro to display child pages below the root page of a standard website.
+*@
+
+@using Umbraco.Web.Models
+@using Umbraco.Web.Controllers
+
+@{
+    @*Get the root of the website *@
+    var root = CurrentPage.AncestorOrSelf(1);
+}
+<div class="navbar navbar-default navbar-fixed-top row" role="navigation">
+    <div class="container col-sm-offset-2 col-sm-8 col-xs-12">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">RentAnimal</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                @{
+                    var loginStatusModel = Members.GetCurrentLoginStatus();
+                }
+                @foreach (var page in root.Children.Where("Visible"))
+                {
+                    <!-- Adapted for switching if loged-in -->
+                    if (!(page.Name == "Publish" && !loginStatusModel.IsLoggedIn))
+                    {
+                        <li class="@(page.IsAncestorOrSelf(CurrentPage) ? "active" : null)">
+                            <a href="@page.Url">@page.Name</a>
+                        </li>
+                    }
+
+                }
+                <!-- Added drop-down for login -->
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">Memeber <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        @{
+                            if (loginStatusModel.IsLoggedIn)
+                            {
+                                <li>Hey, <strong>@loginStatusModel.Name</strong>!</li>
+                                <li class="divider"></li>
+                                @Umbraco.RenderMacro("LoginStatus")
+                            }
+                            else
+                            {
+                                <li> <a href="/login/">Login</a></li>
+                                <li> <a href="/register/">Register</a></li>
+                            }
+                        }
+                    </ul>
+                </li>
+            </ul>
+
+        </div><!--/.navbar-collapse -->
+    </div>
+</div>

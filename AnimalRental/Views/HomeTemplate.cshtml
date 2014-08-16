@@ -1,0 +1,32 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = null;
+}
+<!-- Carousel for 5 newest animals -->
+<div class="row">
+    <div class="col-sm-offset-1 col-xs-10 hidden-xs" ng-controller="carouselController">
+        <div>
+            <carousel interval="myInterval">
+                <slide ng-repeat="slide in lastAnimals" active="slide.active" style="height: 300px; overflow: hidden">
+                    <img ng-src="~/AnimalPhotos/{{slide.PhotoUrl}}" style="margin:auto; width: 100%">
+                    <div class="carousel-caption">
+                        <a href='~/details/{{slide.AnimalId}}'><h3>{{slide.Name}}</h3></a>
+                    </div>
+                </slide>
+            </carousel>
+        </div>
+    </div>
+</div>
+
+<!-- The bottom - two columns -->
+<div class="row">
+    <div class="col-sm-offset-1 col-sm-4 col-xs-12 text-center">
+        <h3>@Umbraco.Field("homebottomleftmessagetitle")</h3>
+        <p>@Umbraco.Field("homebottomleftmessagecontent")</p>
+    </div>
+    <div class="col-sm-2 col-xs-12"></div>
+    <div class="col-sm-4 col-xs-12 text-center">
+        <h3>@Umbraco.Field("homebottomrightmessagetitle")</h3>
+        <p>@Umbraco.Field("homebottomrightmessagecontent")</p>
+    </div>
+</div>
